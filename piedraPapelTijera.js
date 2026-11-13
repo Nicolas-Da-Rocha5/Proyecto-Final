@@ -1,57 +1,70 @@
 let minijuego;
 let turno = 1;
+let ronda = 1;
 let eleccionMaquina = document.getElementById("maquina");
 let resultado = document.getElementById("resultado");
 let btnPiedra = document.getElementById("piedra");
 let btnPapel = document.getElementById("papel");
 let btnTijera = document.getElementById("tijera");
+let contadorJugador1 = 0;
+let contadorJugador2 = 0;
+let eleccionJugador1;
+let eleccionJugador2;
 
-if(turno == 1){
+console.log(turno);
 
-    btnPiedra.addEventListener("click", piedra);
-    btnPapel.addEventListener("click", papel);
-    btnTijera.addEventListener("click", tijera);
-
-    let eleccionJugador1;
-
-    function piedra(){
-        eleccionJugador1 = 1;
-    }
-
-    function papel(){
-        eleccionJugador1 = 2;
-    }
-
-    function tijera(){
-        eleccionJugador1 = 3;
-    }
-
-    turno = 2;
-
-} else if (turno == 2){
-
+// Se establece la Ronda 1
 
     btnPiedra.addEventListener("click", piedra);
     btnPapel.addEventListener("click", papel);
     btnTijera.addEventListener("click", tijera);
 
-    let eleccionJugador2;
+    if (ronda == 1){
 
-    function piedra(){
-        eleccionJugador2 = 1;
+        if(turno == 1){
+            console.log(turno);
+            if(contadorJugador1 == 0){
+                console.log(turno);
+            }
+        }
+
+        } else if (turno == 2){
+            btnPiedra.style.visibility = `visible`;
+            ronda = 2;
+            turno = 1;
+        }
+
+     else if (ronda == 2){
+        if (turno == 1){
+            turno = 2;
+        } else if (turno == 2){
+            ronda = 3;
+            turno = 1;
+        }
+    } else{
+        if (turno == 1){
+            turno = 2;
+        } else if (turno == 2){
+            elegirGanador();
+        }
     }
 
-    function papel(){
-        eleccionJugador2 = 2;
+
+    
+    if(contadorJugador1 == 3){
+        turno = 2;
+        console.log("Turno del Jugador 2");
     }
 
-    function tijera(){
-        eleccionJugador2 = 3;
+    else if (turno == 2){
+
+        resultado.innerHTML = "turno 2";
+
+        btnPiedra.addEventListener("click", piedra);
+        btnPapel.addEventListener("click", papel);
+        btnTijera.addEventListener("click", tijera);
+
     }
-
-    elegirGanador();
-
-}
 
 function elegirGanador(){
 
@@ -65,55 +78,98 @@ function sleep(ms) {
 } // usen esto sleep(5000); si no anda me avisan
 
 
-
-
-console.log(minijuego);
-
 function piedra(){
 
-    minijuego = Math.floor(Math.random()*3)+1;
+    //if (turno == 1){
+      //  if (contadorJugador1 == 3){
+        //    turno = 2;
+          //  console.log (turno);
+        //} else {
+          //  contadorJugador1 = contadorJugador1 + 1;
+        //}
+    //}
 
-    if(minijuego == 1){
-        resultado.innerHTML = "Empate";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Piedra`;
-    } else if (minijuego == 2){
-        resultado.innerHTML = "Perdiste";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Papel`;
-    } else{
-        resultado.innerHTML = "Ganaste";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Tijera`;
+    //if (turno == 2){
+      //  if(contadorJugador2 == 3){
+        //    elegirGanador();
+        //} else {
+         //   contadorJugador2 = contadorJugador2 + 1;
+       // }
+    //}
+
+    contadorJugador1 = contadorJugador1 + 1;
+
+    if (contadorJugador1 == 1){
+        btnPiedra.style.display = `none`;
+        turno = 2;    
     }
 
+    contadorJugador2 = contadorJugador2 + 1;
+
+    console.log("Jugador 1 es: " + contadorJugador1);
+    console.log("Jugador 2 es: " + contadorJugador2);
 }
 
-function papel(){
+//function papel(){
 
-    minijuego = Math.floor(Math.random()*3)+1;
+  //  if(contadorJugador1 == 1){
+    //    let jugador1Turno1 = 2;
+   // } else if (contadorJugador2 == 2){
+     //   let jugador1Turno2 = 2;
+    //} else{
+     //   let jugador1Turno3 = 2;
+   // }
 
-    if(minijuego == 1){
-        resultado.innerHTML = "Ganaste";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Piedra`;
-    } else if (minijuego == 2){
-        resultado.innerHTML = "Empate";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Papel`;
-    } else{
-        resultado.innerHTML = "Perdiste";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Tijera`;
-    }
-}
+    //if(contadorJugador2 == 1){
+        //let jugador2Turno1 = 2;
+    //} else if (contadorJugador2 == 2){
+        //let jugador2Turno2 = 2;
+    //} else if (contadorJugador2 == 3){
+        //let jugador2Turno3 = 2;
+    //}
 
-function tijera(){
+    //if (turno == 1){
+      //  if (contadorJugador1 == 3){
+            //turno = 2;
+            //console.log (turno);
+        //} else {
+            //contadorJugador1 = contadorJugador1 + 1;
+        //}
+    //}
 
-    minijuego = Math.floor(Math.random()*3)+1;
+    //if (turno == 2){
+        //if(contadorJugador2 == 3){
+            //elegirGanador();
+        //} else {
+            //contadorJugador2 = contadorJugador2 + 1;
+        //}
+    //}
 
-    if(minijuego == 1){
-        resultado.innerHTML = "Perdiste";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Piedra`;
-    } else if (minijuego == 2){
-        resultado.innerHTML = "Ganaste";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Papel`;
-    } else{
-        resultado.innerHTML = "Empate";
-        eleccionMaquina.innerHTML = `La elección de la máquina fue: Tijera`;
-    }
-}
+    //console.log("Jugador 1 es: " + contadorJugador1);
+    //console.log("Jugador 2 es: " + contadorJugador2);
+//}
+
+//function tijera(){
+
+    //if(contadorJugador1 == 1){
+      //  let jugador1Turno1 = 3;
+    //} else if (contadorJugador2 == 2){
+        //let jugador1Turno2 = 3;
+    //} else{
+        //let jugador1Turno3 = 3;
+    //}
+
+    //if(contadorJugador2 == 1){
+        //let jugador2Turno1 = 3;
+//    } else if (contadorJugador2 == 2){
+  //      let jugador2Turno2 = 3;
+    //} else if (contadorJugador2 == 3){
+      //  let jugador2Turno3 = 3;
+    //}
+
+    //contadorJugador1 = contadorJugador1 + 1;
+    //contadorJugador2 = contadorJugador2 + 1;
+    
+//    console.log("Jugador 1 es: " + contadorJugador1);
+  //  console.log("Jugador 2 es: " + contadorJugador2);
+//}
