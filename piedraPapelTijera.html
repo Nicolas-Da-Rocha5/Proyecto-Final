@@ -1,37 +1,76 @@
 <!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Party Games </title>
-    <link href="estilos.css" type="text/css" rel="stylesheet">
-</head>
+<html>
 
-<body>
+    <head>
+        <title> ✨Piedra, Papel y Tijera ✨</title>
+        <link rel="icon" href="imagenes/favicon.ico">
+        <meta charset = "UTF-8">
+        <link href="styles.css" type="text/css" rel="stylesheet">
+    </head>
 
-    <h1> Party Games </h1>
+    <body>
 
-    <p> Pequeños minijuegos para jugar con un amigo. </p>
-    <p> Elige uno de los botones </p>
-    <p id="turnoJugador"> </p>
-    <p id="ronda"></p>
-    <p id="segundosRestantes"> </p>
+        <h1> Bienvenido a 💎Piedra💎, 📄Papel📄 y ✂️Tijera✂️ </h1>
 
-    <button id="inicioJuego"> Toque aquí para iniciar el juego </button>
+            <h2>No hagan trampa y no miren lo que elige el otro</h2>
 
-    <button id="piedra"> Piedra </button>
-    <button id="piedraJ2"> Piedram </button>
+        <p id="juegoTerminado"> </p>
+        <p id="turnoJugadorTexto"> </p>
+        <p id="rondaTexto"> </p>
+        <p id="ganadorRonda"></p>
+        <p id="tiempoRestanteTexto"> </p>
+
+        <div class="botonesPiedraPapelTijera"> 
+
+            <div class="contenedorBotones">
+
+                <h2> Jugador 1 </h2>
+
+                <button class="botonesJ1" id="btnPiedraJ1"> 💎 Piedra 💎 </button>
+                <button class="botonesJ1" id="btnPapelJ1"> 📄 Papel 📄 </button>
+                <button class="botonesJ1" id="btnTijeraJ1"> ✂️ Tijera ✂️ </button>
+
+            </div>
+
+            <div class="divisor">   </div>
+
+            <div class="contenedorBotones">
+
+                <h2> Jugador 2 </h2>
+
+                <button class="botonesJ2" id="btnPiedraJ2"> 💎 Piedra 💎 </button>
+                <button class="botonesJ2" id="btnPapelJ2"> 📄 Papel 📄 </button>
+                <button class="botonesJ2" id="btnTijeraJ2"> ✂️ Tijera ✂️ </button>
+
+            </div>
+
+        </div>
+
+        <button id="btnIniciarJuego"> Iniciar Juego </button>    
+
     
-    <button id="papel"> Papel </button>
-    <button id="papelJ2"> Papelm </button>
 
-    <button id="tijera"> Tijera </button>
-    <button id="tijeraJ2"> Tijeram </button>
+</body>
 
-    <p id="resultado"></p>
+    <footer>
+
+        <div class="contenedorPuntaje">
+            <p> Puntaje del Jugador 1: </p>
+            <p id="contadorPuntajeJ1"> 0 </p>
+        </div>
+
+        <div>
+            <p id="ganadorFinal"></p>
+        </div>
+
+        <div class="contenedorPuntaje">
+            <p> Puntaje del Jugador 2: </p>
+            <p id="contadorPuntajeJ2"> 0 </p>
+        </div>
+
+    </footer>
 
     <script src="piedraPapelTijera.js"></script>
 
-</body>
 </html>
