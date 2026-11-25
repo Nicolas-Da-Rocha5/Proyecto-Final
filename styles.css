@@ -25,6 +25,13 @@ h2{
     font-family:broadway;
 }
 
+p{
+    text-align:center;
+    color: white;
+    font-size:25px;
+    font-family:broadway;
+}
+
 .botonesPiedraPapelTijera{
     display:flex;
     width:100%;

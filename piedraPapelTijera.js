@@ -2,23 +2,23 @@
 
     // Variables de los Botones
 
-        let btnPiedra = document.getElementById("piedra");
-        let btnPapel = document.getElementById("papel");
-        let btnTijera = document.getElementById("tijera");
-        let btnPiedraJ2 = document.getElementById("piedraJ2");
-        let btnPapelJ2 = document.getElementById("papelJ2");
-        let btnTijeraJ2 = document.getElementById("tijeraJ2");
+        let btnIniciojuego = document.getElementById("btnIniciarJuego");
+        let btnPiedra = document.getElementById("btnPiedra");
+        let btnPapel = document.getElementById("btnPapel");
+        let btnTijera = document.getElementById("btnTijera");
+        let btnPiedraJ2 = document.getElementById("btnPiedraJ2");
+        let btnPapelJ2 = document.getElementById("btnPapelJ2");
+        let btnTijeraJ2 = document.getElementById("btnTijeraJ2");
 
     // Variables del Temporizador
 
         const tiempoTurno = 16;   // El temporizador tiene un total de 16 segundos (16000 milisegundos)
         let temporizador = null;
         let segundosRestantes = tiempoTurno;
-        let segundosRestantesTexto = document.getElementById("tiempoRestanteTexto");
+        let tiempoRestanteTexto = document.getElementById("tiempoRestanteTexto");
 
     // Variables Extras
 
-        let btnIniciojuego = document.getElementById("inicioJuego");
         let eleccionJugador1 = 0;
         let eleccionJugador2 = 0;
         let rondaJuego = 1;
@@ -61,6 +61,8 @@ function pausarTemporizador(){
 
 function inicioJuego(){
 
+    console.log("Se inicio el juego");
+
     if (rondaJuego == 1){
         document.getElementById("rondaTexto").innerHTML = "Ronda: 01 de 03";
     } else if (rondaJuego == 2){
@@ -81,7 +83,7 @@ function inicioJuego(){
 
         temporizador = setInterval(()=>{ // Duración del turno
             segundosRestantes--; // Se resta un segundo al contador
-            segundosRestantesTexto = `El tiempo restante es: ${segundosRestantes} segundos`;
+            tiempoRestanteTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
 
             if(segundosRestantes <=0){
                 pausarTemporizador();
@@ -132,7 +134,7 @@ function funcionPiedra(){
             segundosRestantesTexto = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
         }, 800);
 
-    } (turnoJugador == 2){
+    } else if (turnoJugador == 2){
 
         btnPiedraJ2.disabled = true;
         btnPapelJ2.disabled = true;
