@@ -11,7 +11,7 @@ body{
     height:auto;
 }
 
-img{
+.botonesJ1, .botonesJ2{
     width: 125px !important; 
     height: 125px !important;
 }
@@ -118,7 +118,7 @@ p{
     margin-bottom:3px;
     margin-top:6px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size:25px;
+    font-size:20px;
     font-weight:bold;
     color:#ffbb00;
     font-family:'goudy stout';
@@ -162,9 +162,22 @@ img{
 }
 
 .inp{
-    font-size:45px;
-    padding-top:5%;
-    padding-bottom:5%;
+    font-size:25px;
+    padding-top:2%;
+    padding-bottom:2%;
+}
+
+.piedrajuego, .numerojuego{
+    width:45%;
+    height:150px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: all 1s;
+}
+
+.piedrajuego:hover, .numerojuego:hover{
+    width:55%;
+    transition: all 1s;
 }
 
 .desc{
@@ -189,6 +202,12 @@ img{
     font-family:broadway;
     background-color: #00c8ff;
     border: 5px solid #ffbb00;
+    transition: all 0.8s;
+}
+
+.btnMinijuego:hover{
+    width: 650px;
+    transition: all 0.8s;
 }
 
 .piedrajuego{

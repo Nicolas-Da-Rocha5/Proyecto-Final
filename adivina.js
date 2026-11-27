@@ -14,7 +14,7 @@ let numeroAdivinadoJugador2;
 let contadorPuntajeJ1 = 0;
 let contadorPuntajeJ2 = 0;
 let ganadorRonda = document.getElementById("ganadorRonda");
-let i;
+let ganadorFinal = document.getElementById("ganadorFinal");
 
 adivinaNumero.disabled = true;
 
@@ -83,15 +83,22 @@ function comprobarGanador() {
         temporizador = setInterval(() => {
             segundosRestantes--;
             tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en ${segundosRestantes} segundos`;
+            adivinaNumero.disabled = true;
 
             if (segundosRestantes <= 0) {
                 pausarTemporizador();
 
                 if (turnoJugador == 1) {
                     turnoJugador = 2;
+                    ganadorRonda.innerHTML = null;
+                    tiempoRestanteTexto.innerHTML = null;
+                    adivinaNumero.disabled = false;
                     inicioJuego();
                 } else {
                     turnoJugador = 1;
+                    ganadorRonda.innerHTML = null;
+                    tiempoRestanteTexto.innerHTML = null;
+                    adivinaNumero.disabled = false;
                     inicioJuego();
                 }
             }
@@ -104,7 +111,10 @@ function comprobarGanador() {
 
         if (numeroAdivinarJugador1 == numeroAdivinadoJugador2) {
             ganadorRonda.innerHTML = "El Jugador 2 ha adivinado, +1 punto";
-            contadorPuntajeJ1 = contadorPuntajeJ1 + 1;
+            contadorPuntajeJ2 = contadorPuntajeJ2 + 1;
+        } else {
+            ganadorRonda.innerHTML = "El Jugador 2 no ha adivinado";
+        }
 
             if (rondaJuego == 1) {
                 rondaJuego = 2;
@@ -112,13 +122,22 @@ function comprobarGanador() {
                 rondaJuego = 3;
             } else if (rondaJuego == 3) {
 
+                if (contadorPuntajeJ1 == contadorPuntajeJ2){
+                    ganadorFinal.innerHTML = "Fue un empate, nadie ha ganado";
+                } else if (contadorPuntajeJ1 > contadorPuntajeJ2){
+                    ganadorFinal.innerHTML = "El ganador es el Jugador 1";
+                } else if (contadorPuntajeJ1 < contadorPuntajeJ2){
+                    ganadorFinal.innerHTML = "El ganador es el Jugador 2";
+                }              
+
                 pausarTemporizador();
                 segundosRestantes = tiempoVolver;
 
                 temporizador = setInterval(() =>{
                     segundosRestantes--;
                     tiempoRestanteTexto.innerHTML = `El juego ha terminado, se volverá a la página principal en ${segundosRestantes} segundos`;
-
+                    adivinaNumero.disabled = false;
+                    
                     if(segundosRestantes <=0){
                         pausarTemporizador();
                         location.href = "index.html";
@@ -130,23 +149,27 @@ function comprobarGanador() {
 
             temporizador = setInterval(() => {
                 segundosRestantes--;
-                tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en ${segundosRestantes} segundos`;
+                tiempoRestanteTexto.innerHTML = `La siguiente ronda empezará en ${segundosRestantes} segundos`;
 
                 if (segundosRestantes <= 0) {
                     pausarTemporizador();
 
                     if (turnoJugador == 1) {
                         turnoJugador = 2;
+                        ganadorRonda.innerHTML = null;
+                        tiempoRestanteTexto.innerHTML = null;
+                        adivinaNumero.disabled = false;
                         inicioJuego();
                     } else {
                         turnoJugador = 1;
+                        ganadorRonda.innerHTML = null;
+                        tiempoRestanteTexto.innerHTML = null;
+                        adivinaNumero.disabled = false;
                         inicioJuego();
                     }
                 }
 
             }, 800);
-
-        }
 
     }
 
