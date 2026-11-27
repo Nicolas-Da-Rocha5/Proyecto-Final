@@ -2,6 +2,7 @@ const tiempoRonda = 11;   // El temporizador tiene un total de 11 segundos (1100
 const tiempoVolver = 6;   // El temporizador tiene un total de 6 segundos (6000 milisegundos)
 let temporizador = null;
 let segundosRestantes = tiempoRonda;
+let tiempoRestanteTexto = document.getElementById("tiempoRestanteTexto");
 let iniciarJuego = document.getElementById("adivina");
 let adivinaNumero = document.getElementById("adivinaNumero");
 let turnoJugador = 1;
@@ -10,36 +11,41 @@ let numeroAdivinarJugador1;
 let numeroAdivinarJugador2;
 let numeroAdivinadoJugador1;
 let numeroAdivinadoJugador2;
+let contadorPuntajeJ1 = 0;
+let contadorPuntajeJ2 = 0;
+let ganadorRonda = document.getElementById("ganadorRonda");
 let i;
 
-iniciarJuego.addEventListener("click", iniciarJuego);
+adivinaNumero.disabled = true;
+
+iniciarJuego.addEventListener("click", inicioJuego);
 adivinaNumero.addEventListener("click", adivinarNumero);
 
-function iniciarJuego(){
+function inicioJuego() {
 
     console.log("Se inicio el juego");
 
-    if (rondaJuego == 1){
+    if (rondaJuego == 1) {
         document.getElementById("rondaTexto").innerHTML = "Ronda: 01 de 03";
-    } else if (rondaJuego == 2){
+    } else if (rondaJuego == 2) {
         document.getElementById("rondaTexto").innerHTML = "Ronda: 02 de 03";
     } else {
         document.getElementById("rondaTexto").innerHTML = "Ronda: 03 de 03";
     }
 
-    if (turnoJugador == 1){
+    if (turnoJugador == 1) {
 
-        numeroAdivinarJugador2 = prompt ("Jugador 2, elija un número del 1 al 10 para que el Jugador 1 pueda adivinar:");
-        numeroAdivinarJugador2 = parseInt (numeroAdivinarJugador2);
+        numeroAdivinarJugador2 = prompt("Jugador 2, elija un número del 1 al 10 para que el Jugador 1 pueda adivinar:");
+        numeroAdivinarJugador2 = parseInt(numeroAdivinarJugador2);
+        adivinaNumero.disabled = false;
+        iniciarJuego.disabled = true;
 
-        adivinarNumero();
+    } else if (turnoJugador == 2) {
 
-    } else if (turnoJugador == 2){
-
-        numeroAdivinarJugador1 = prompt ("Jugador 1, elija un número del 1 al 10 para que el Jugador 2 pueda adivinar:");
-        numeroAdivinarJugador1 = parseInt (numeroAdivinarJugador1);
-
-        adivinarNumero();
+        numeroAdivinarJugador1 = prompt("Jugador 1, elija un número del 1 al 10 para que el Jugador 2 pueda adivinar:");
+        numeroAdivinarJugador1 = parseInt(numeroAdivinarJugador1);
+        adivinaNumero.disabled = false;
+        iniciarJuego.disabled = true;
 
     }
 
@@ -47,94 +53,106 @@ function iniciarJuego(){
 
 }
 
-function adivinarNumero(){
+function adivinarNumero() {
 
-    if (turnoJugador == 1){
-        numeroAdivinadoJugador1 = prompt ("Jugador 1, adivina el número brindado por el Jugador 2:");
-        numeroAdivinadoJugador1 = parseInt (numeroAdivinadoJugador1);
-    } else if (turnoJugador == 2){
-        numeroAdivinadoJugador2 = prompt ("Jugador 2, adivina el número brindado por el Jugador 1:");
-        numeroAdivinadoJugador2 = parseInt (numeroAdivinadoJugador2);
+    if (turnoJugador == 1) {
+        numeroAdivinadoJugador1 = prompt("Jugador 1, adivina el número brindado por el Jugador 2:");
+        numeroAdivinadoJugador1 = parseInt(numeroAdivinadoJugador1);
+        comprobarGanador();
+    } else if (turnoJugador == 2) {
+        numeroAdivinadoJugador2 = prompt("Jugador 2, adivina el número brindado por el Jugador 1:");
+        numeroAdivinadoJugador2 = parseInt(numeroAdivinadoJugador2);
+        comprobarGanador();
     }
-    
+
 }
 
+function comprobarGanador() {
 
-function adivinaElNumero() {
+    if (turnoJugador == 1) {
 
-    if (rondaJuego == 1){
-        rondaJuego = 2;
-        iniciarJuego()
-    } else if (rondaJuego == 2){
-        rondaJuego = 3;
-        iniciarJuego()
-    } else if (rondaJuego == 3){
-
-        if (contadorPuntajeJ1 == contadorPuntajeJ2){
-            juegoTerminado.innerHTML = "No hubo ganador, hubo un empate";
-        } else if (contadorPuntajeJ1 > contadorPuntajeJ2){
-            juegoTerminado.innerHTML = "El ganador es el Jugador 1";
+        if (numeroAdivinarJugador2 == numeroAdivinadoJugador1) {
+            ganadorRonda.innerHTML = "El Jugador 1 ha adivinado, +1 punto";
+            contadorPuntajeJ1 = contadorPuntajeJ1 + 1;
         } else {
-            juegoTerminado.innerHTML = "El ganador es el Jugador 2";
+            ganadorRonda.innerHTML = "El Jugador 1 no ha adivinado";
         }
 
-        segundosRestantes = 6;
-        segundosRestantesTexto.innerHTML = "El juego ha terminado, será redirigido a la página principal en: 6 segundos";
+        segundosRestantes = tiempoVolver;
 
-        temporizador = setInterval(()=>{
+        temporizador = setInterval(() => {
             segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El juego ha terminado, será redirigido a la página principal en ${segundosRestantes} segundos`;
-            
-            if(segundosRestantes <=0){
+            tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en ${segundosRestantes} segundos`;
+
+            if (segundosRestantes <= 0) {
                 pausarTemporizador();
-                location.href = "index.html"; // Redirecciona a la página principal tras haber pasado 6 segundos de espera
+
+                if (turnoJugador == 1) {
+                    turnoJugador = 2;
+                    inicioJuego();
+                } else {
+                    turnoJugador = 1;
+                    inicioJuego();
+                }
             }
+
+
         }, 800);
 
 
-    }
+    } else if (turnoJugador == 2) {
 
+        if (numeroAdivinarJugador1 == numeroAdivinadoJugador2) {
+            ganadorRonda.innerHTML = "El Jugador 2 ha adivinado, +1 punto";
+            contadorPuntajeJ1 = contadorPuntajeJ1 + 1;
 
-    for (i = 1; i <= 3; i++) {
+            if (rondaJuego == 1) {
+                rondaJuego = 2;
+            } else if (rondaJuego == 2) {
+                rondaJuego = 3;
+            } else if (rondaJuego == 3) {
 
-        temporizador = setInterval(() => {
-            segundosRestantes = tiempoRonda;
-            segundosRestantes --; // Le empieza a restar de uno en uno al reloj (el tiempo)
-            if(segundosRestantes <= 0){
-                pausarTemporizador(); // Función que sirve para detener la cuenta regresiva y finalizar el turno del jugador
+                pausarTemporizador();
+                segundosRestantes = tiempoVolver;
+
+                temporizador = setInterval(() =>{
+                    segundosRestantes--;
+                    tiempoRestanteTexto.innerHTML = `El juego ha terminado, se volverá a la página principal en ${segundosRestantes} segundos`;
+
+                    if(segundosRestantes <=0){
+                        pausarTemporizador();
+                        location.href = "index.html";
+                    }
+                }, 800);
             }
-        }, 800); 
 
-        function pausarTemporizador(){
-        clearInterval(temporizador); // Se corta el temporizador
-        temporizador = null; // Con esto, el reloj se detiene y para la cuenta regresiva
-        segundosRestantes = tiempoTurno;
-}
-
-        minijuego = Math.floor(Math.random() * 10) + 1;
-        let numeroJugador = prompt("Ingrese un número del 1 al 10:");
-        document.getElementById("consola").innerHTML = `El número elegido aleatoriamente es: ${minijuego}`;
-
-        if (numeroJugador == minijuego) {
-            resultado.innerHTML = "Has ganado!";
-        } else {
-            resultado.innerHTML = "Has perdido";
-        }
-
-        if (i == 3) {
             segundosRestantes = tiempoVolver;
+
             temporizador = setInterval(() => {
-            segundosRestantes --; // Le empieza a restar de uno en uno al reloj (el tiempo)
-            if(segundosRestantes <= 0){
-                pausarTemporizador(); // Función que sirve para detener la cuenta regresiva y finalizar el turno del jugador
-            }
-        }, 800); 
+                segundosRestantes--;
+                tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en ${segundosRestantes} segundos`;
+
+                if (segundosRestantes <= 0) {
+                    pausarTemporizador();
+
+                    if (turnoJugador == 1) {
+                        turnoJugador = 2;
+                        inicioJuego();
+                    } else {
+                        turnoJugador = 1;
+                        inicioJuego();
+                    }
+                }
+
+            }, 800);
 
         }
 
-        location.href = "index.html";
-
     }
-    
+
 }
 
+function pausarTemporizador() {
+    clearInterval(temporizador);
+    temporizador = null;
+}

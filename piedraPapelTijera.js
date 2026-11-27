@@ -3,9 +3,9 @@
     // Variables de los Botones
 
         let btnInicioJuego = document.getElementById("btnIniciarJuego");
-        let btnPiedra = document.getElementById("btnPiedra");
-        let btnPapel = document.getElementById("btnPapel");
-        let btnTijera = document.getElementById("btnTijera");
+        let btnPiedra = document.getElementById("btnPiedraJ1");
+        let btnPapel = document.getElementById("btnPapelJ1");
+        let btnTijera = document.getElementById("btnTijeraJ1");
         let btnPiedraJ2 = document.getElementById("btnPiedraJ2");
         let btnPapelJ2 = document.getElementById("btnPapelJ2");
         let btnTijeraJ2 = document.getElementById("btnTijeraJ2");
@@ -13,6 +13,7 @@
     // Variables del Temporizador
 
         const tiempoTurno = 16;   // El temporizador tiene un total de 16 segundos (16000 milisegundos)
+        const tiempoVolver = 6;   // El temporizador tiene un total de 6 segundos (6000 milisegundos)
         let temporizador = null;
         let segundosRestantes = tiempoTurno;
         let tiempoRestanteTexto = document.getElementById("tiempoRestanteTexto");
@@ -85,7 +86,10 @@ function inicioJuego(){
         btnPapelJ2.disabled = true;
         btnTijeraJ2.disabled = true;
 
+        segundosRestantes = tiempoTurno;
+
         temporizador = setInterval(()=>{ // Duración del turno
+
             segundosRestantes--; // Se resta un segundo al contador
             tiempoRestanteTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
 
@@ -109,7 +113,7 @@ function inicioJuego(){
     
         temporizador = setInterval(() => {
             segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
+            tiempoRestanteTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
 
             if(segundosRestantes <= 0){
                 pausarTemporizador();
@@ -131,11 +135,18 @@ function funcionPiedra(){
 
         eleccionJugador1 = 1;
         pausarTemporizador();
-        segundosRestantes = 6;
+        segundosRestantes = tiempoVolver;
 
         temporizador = setInterval(()=>{
             segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
+            tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
+
+            if (segundosRestantes <=0){
+                pausarTemporizador();
+                turnoJugador = 2;
+                inicioJuego();
+            }
+            
         }, 800);
 
     } else if (turnoJugador == 2){
@@ -145,20 +156,7 @@ function funcionPiedra(){
         btnTijeraJ2.disabled = true;
 
         eleccionJugador2 = 1;
-        pausarTemporizador();
         elegirGanador();
-
-        segundosRestantes = tiempoTurno;
-
-        temporizador = setInterval(() =>{
-            segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
-
-             if(segundosRestantes <= 0){
-                pausarTemporizador();
-            }
-
-        }, 800);
 
     }
 
@@ -175,11 +173,18 @@ function funcionPapel(){
 
         eleccionJugador1 = 2;
         pausarTemporizador();
-        segundosRestantes = 6;
+        segundosRestantes = tiempoVolver;
 
         temporizador = setInterval(()=>{
             segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
+            tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
+
+            if (segundosRestantes <=0){
+                pausarTemporizador();
+                turnoJugador = 2;
+                inicioJuego();
+            }
+            
         }, 800);
 
     } else if (turnoJugador == 2){
@@ -189,20 +194,7 @@ function funcionPapel(){
         btnTijeraJ2.disabled = true;
 
         eleccionJugador2 = 2;
-        pausarTemporizador();
         elegirGanador();
-
-        segundosRestantes = tiempoTurno;
-
-        temporizador = setInterval(() =>{
-            segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
-
-             if(segundosRestantes <= 0){
-                pausarTemporizador();
-            }
-
-        }, 800);
 
     }
 
@@ -218,11 +210,18 @@ function funcionTijera(){
 
         eleccionJugador1 = 3;
         pausarTemporizador();
-        segundosRestantes = 6;
+        segundosRestantes = tiempoVolver;
 
         temporizador = setInterval(()=>{
             segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
+            tiempoRestanteTexto.innerHTML = `El siguiente turno empezará en: ${segundosRestantes} segundos`;
+
+            if (segundosRestantes <=0){
+                pausarTemporizador();
+                turnoJugador = 2;
+                inicioJuego();
+            }
+            
         }, 800);
 
     } else if (turnoJugador == 2){
@@ -232,20 +231,7 @@ function funcionTijera(){
         btnTijeraJ2.disabled = true;
 
         eleccionJugador2 = 3;
-        pausarTemporizador();
         elegirGanador();
-
-        segundosRestantes = tiempoTurno;
-
-        temporizador = setInterval(() =>{
-            segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El tiempo restante es: ${segundosRestantes} segundos`;
-
-             if(segundosRestantes <= 0){
-                pausarTemporizador();
-            }
-
-        }, 800);
 
     }
 
@@ -258,7 +244,6 @@ function elegirGanador(){
     if(eleccionJugador1 == eleccionJugador2){ // Posibilidad 1: Empate
         ganadorFinal.innerHTML = "No hay ganador, hubo un empate";
         contadorPuntajeJ1 = contadorPuntajeJ1 + 1;
-
     } else if ((eleccionJugador1 == 1) && (eleccionJugador2 == 3)){ // Posibilidad 2: Piedra vs Tijera (Ganador: Jugador 1)
         ganadorFinal.innerHTML = "El ganador es el Jugador 1";
         contadorPuntajeJ1 = contadorPuntajeJ1 + 1;
@@ -294,11 +279,39 @@ function elegirGanador(){
     }
 
     if (rondaJuego == 1){
-        rondaJuego = 2;
-        iniciarJuego()
+
+        segundosRestantes = tiempoVolver;
+
+        temporizador = setInterval(() =>{
+            segundosRestantes--;
+            tiempoRestanteTexto.innerHTML = `La siguiente ronda empezará en ${segundosRestantes} segundos`;
+
+            if (segundosRestantes <=0){
+                pausarTemporizador();
+                turnoJugador = 1;
+                rondaJuego = 2;
+                inicioJuego();
+            }
+        }, 800);
+
     } else if (rondaJuego == 2){
-        rondaJuego = 3;
-        iniciarJuego()
+    
+        segundosRestantes = tiempoVolver;
+
+        temporizador = setInterval(() =>{
+            segundosRestantes--;
+            tiempoRestanteTexto.innerHTML = `La siguiente ronda empezará en ${segundosRestantes} segundos`;
+
+            if (segundosRestantes <=0){
+                pausarTemporizador();
+                eleccionJugador1 = 0;
+                eleccionJugador2 = 0;
+                turnoJugador = 1;
+                rondaJuego = 3;
+                inicioJuego();
+            }
+        }, 800);
+
     } else if (rondaJuego == 3){
 
         if (contadorPuntajeJ1 == contadorPuntajeJ2){
@@ -309,12 +322,12 @@ function elegirGanador(){
             juegoTerminado.innerHTML = "El ganador es el Jugador 2";
         }
 
-        segundosRestantes = 6;
-        segundosRestantesTexto.innerHTML = "El juego ha terminado, será redirigido a la página principal en: 6 segundos";
+        segundosRestantes = tiempoVolver;
+        //tiempoRestanteTexto.innerHTML = "El juego ha terminado, será redirigido a la página principal en: 6 segundos";
 
         temporizador = setInterval(()=>{
             segundosRestantes--;
-            segundosRestantesTexto.innerHTML = `El juego ha terminado, será redirigido a la página principal en ${segundosRestantes} segundos`;
+            tiempoRestanteTexto.innerHTML = `El juego ha terminado, será redirigido a la página principal en ${segundosRestantes} segundos`;
             
             if(segundosRestantes <=0){
                 pausarTemporizador();
